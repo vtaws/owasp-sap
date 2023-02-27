@@ -23,7 +23,7 @@ jobs:
       run: docker ps
       
     - name: Health check
-      run: chromium http://localhost:8000
+      run: curl http://localhost:8000
       
     - name: Stop containers
       if: always()
