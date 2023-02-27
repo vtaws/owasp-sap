@@ -20,7 +20,7 @@ jobs:
       run: docker-compose -f "docker-compose.yaml" up -d --build
       
     - name: Check the image are running
-      run: docker -ps
+      run: docker ps
       
     - name: Stop containers
       if: always()
