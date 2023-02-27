@@ -25,6 +25,11 @@ jobs:
     - name: Health check
       run: curl http://localhost:8000
       
+    - name: ZAP Scan
+      uses: zaproxy/action-full-scan@v0.4.0
+      with:
+        target: 'http://localhost:8000'
+      
     - name: Stop containers
       if: always()
       run: docker-compose -f "docker-compose.yaml" down
