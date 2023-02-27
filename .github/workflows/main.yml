@@ -1,0 +1,29 @@
+name: owasp-zap
+
+on:
+  push:
+    branches:
+    - main
+    
+  workflow_dispatch:
+  
+jobs:
+  build-container:
+    runs-on: ubuntu-latest
+    
+    steps:
+    
+    - name: Checkout
+      uses: actions/checkout@v3
+    
+    - name: Build Docker Image
+      run: docker-compose -f "docker-compose.yaml" up -d --build
+      
+    - name: Check the image are running
+      run: docker -ps
+      
+    - name: Stop containers
+      if: always()
+      run: docker-compose -f "docker-compose.yaml" down
+      
+    
