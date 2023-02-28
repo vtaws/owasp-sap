@@ -24,8 +24,11 @@ jobs:
     - name: Check the image are running
       run: docker ps
       
-    - name: Health check
+    - name: Health check nginx-1
       run: curl http://127.0.0.1:8000
+    
+    - name: Health check nginx-2
+      run: curl http://127.0.0.1:8001
     
     - name: OWASP ZAP Baseline Scan
       # You may pin to the exact commit or the version.
