@@ -31,15 +31,10 @@ jobs:
     
     - name: Health check nginx-2
       run: curl http://127.0.0.1:8001
-    
-    - name: OWASP ZAP Baseline Scan
-      # You may pin to the exact commit or the version.
-      # uses: zaproxy/action-full-scan@6eade0f93b10fad8cfb4e63b979703a2cbd0cc98
-      uses: zaproxy/action-full-scan@v0.4.0
-      with:
-        target: IFS="," read -a myarray <<< ${{ env.VALUE_ARRAY_AS_STRING }}
-        fail_action: false
-        allow_issue_writing: false
+      
+    - name: Sleep for 30 seconds
+      run: sleep 60s
+      shell: bash
       
     - name: Stop containers
       if: always()
