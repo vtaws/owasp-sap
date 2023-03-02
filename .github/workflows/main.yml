@@ -47,14 +47,7 @@ jobs:
       run: docker pull owasp/zap2docker-stable
       
     - name: Run Scan against URLs
-      run: docker run --net test -v $(pwd):/zap/wrk/:rw \
-          -t owasp/zap2docker-stable zap-full-scan.py -I -j -m 10 -T 60 \
-          -t http://${{ steps.fetchip.outputs.ip }}:80 \
-          -r 20210417-zap-full-scan-without-user.html
-      
-    - name: Sleep for 10 seconds
-      run: sleep 10s
-      shell: bash
+      run: docker run -t owasp/zap2docker-stable zap-baseline.py -t http://${{ steps.fetchip.outputs.ip }}:8000
       
     - name: Stop containers
       if: always()
