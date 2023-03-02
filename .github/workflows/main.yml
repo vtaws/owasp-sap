@@ -38,7 +38,7 @@ jobs:
       run: curl http://127.0.0.1:8001
       
     - name: IP address
-      run: echo "ip=docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' owasp-sap_nginx-1_1" >> $GITHUB_ENV
+      run: docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' owasp-sap_nginx-1_1 >> $GITHUB_ENV
     
     - name: OWASP ZAP Docker pull
       run: docker pull owasp/zap2docker-stable
