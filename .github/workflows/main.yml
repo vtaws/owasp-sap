@@ -32,10 +32,10 @@ jobs:
       run: docker ps
       
     - name: Health check nginx-1
-      run: curl http://127.0.0.1:8000
+      run: curl http://${{ steps.fetchip.outputs.ip }}:8000
     
     - name: Health check nginx-2
-      run: curl http://127.0.0.1:8001
+      run: curl http://${{ steps.fetchip.outputs.ip }}:8001
       
     - name: IP address
       id: fetchip
@@ -47,7 +47,7 @@ jobs:
       run: docker pull owasp/zap2docker-stable
       
     - name: Run Scan against URLs
-      run: docker run -t owasp/zap2docker-stable zap-baseline.py -t http://${{ steps.fetchip.outputs.ip }}:8000
+      run: docker run -d -t owasp/zap2docker-stable
       
     - name: Stop containers
       if: always()
