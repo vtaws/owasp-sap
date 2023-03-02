@@ -40,7 +40,7 @@ jobs:
     - name: IP address
       id: fetchip
       run: |
-        ip = $(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' owasp-sap_nginx-1_1) 
+        ip=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' owasp-sap_nginx-1_1) 
         echo ::set-output name=ip::$ip
     
     - name: OWASP ZAP Docker pull
