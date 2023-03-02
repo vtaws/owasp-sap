@@ -39,6 +39,9 @@ jobs:
     - name: Health check nginx-2
       run: curl http://127.0.0.1:8001
       
+    - name: IP address
+      run: docker inspect nginx-1| grep IPAddress
+      
     - name: OWASP ZAP Docker pull
       run: docker pull owasp/zap2docker-stable
       
