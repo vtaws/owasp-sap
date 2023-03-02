@@ -40,7 +40,7 @@ jobs:
       run: curl http://127.0.0.1:8001
       
     - name: IP address
-      run: docker exec -it owasp-sap_nginx-1_1 hostname -i
+      run: docker container inspect owasp-sap_nginx-1_1 | grep IPAddress
     
     - name: OWASP ZAP Docker pull
       run: docker pull owasp/zap2docker-stable
