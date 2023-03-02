@@ -47,7 +47,7 @@ jobs:
       run: docker pull owasp/zap2docker-stable
       
     - name: Run Scan against URLs
-      run: docker run -t owasp/zap2docker-stable zap-baseline.py -t http:${{ steps.fetchip.outputs.ip }}:8000
+      run: docker run -t owasp/zap2docker-stable zap-baseline.py -t http://${{ steps.fetchip.outputs.ip }}:8000
       
     - name: Sleep for 10 seconds
       run: sleep 10s
