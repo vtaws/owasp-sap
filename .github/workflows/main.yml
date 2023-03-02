@@ -40,7 +40,7 @@ jobs:
       run: docker pull owasp/zap2docker-stable
       
     - name: Run Scan against URLs
-      run: docker run -d -t owasp/zap2docker-stable
+      run: docker run -d -t owasp/zap2docker-stable -t http://${{ steps.fetchip.outputs.ip }}:80
       
     - name: Stop containers
       if: always()
