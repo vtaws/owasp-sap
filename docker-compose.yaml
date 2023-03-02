@@ -1,16 +1,16 @@
+---
 version: "3"
-
 services:
-    nginx-1:
-        image: nginx
-        ports:
-            - 8000:80
-        volumes:
-            - ./src:/usr/share/nginx/html
-    nginx-2:
-        image: nginx
-        ports:
-            - 8001:80
-        volumes:
-            - ./src:/usr/share/nginx/html
-	    
+  nginx-1:
+    image: nginx
+    ports:
+      - 8000:80
+    volumes:
+      - ./src:/usr/share/nginx/html
+  nginx-2:
+    image: nginx
+    ports:
+      - 8001:80
+    volumes:
+      - ./src:/usr/share/nginx/html
+      
