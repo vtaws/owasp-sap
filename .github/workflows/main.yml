@@ -20,11 +20,7 @@ jobs:
       
     - name: Creating Docker Network
       run: docker network create test
-      
-    - name: Sleep for 10 seconds
-      run: sleep 10s
-      shell: bash
-    
+
     - name: Build Docker Image
       run: docker-compose -f "docker-compose.yaml" up -d --build
       
@@ -38,10 +34,7 @@ jobs:
         echo ::set-output name=ip::$ip
       
     - name: Health check nginx-1
-      run: curl http://${{ steps.fetchip.outputs.ip }}:8000
-    
-    - name: Health check nginx-2
-      run: curl http://${{ steps.fetchip.outputs.ip }}:8001
+      run: curl http://${{ steps.fetchip.outputs.ip }}:80
     
     - name: OWASP ZAP Docker pull
       run: docker pull owasp/zap2docker-stable
