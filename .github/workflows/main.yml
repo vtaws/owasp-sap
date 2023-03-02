@@ -43,7 +43,7 @@ jobs:
       run: docker pull owasp/zap2docker-stable
       
     - name: Run Scan against URLs
-      run: docker run -t owasp/zap2docker-stable zap-baseline.py -t https://example.com
+      run: docker run -t owasp/zap2docker-stable zap-baseline.py -t http://127.0.0.1:8000
       
     - name: Sleep for 10 seconds
       run: sleep 10s
