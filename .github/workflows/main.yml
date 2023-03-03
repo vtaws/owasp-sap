@@ -10,6 +10,9 @@ on:
 jobs:
   build-container:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        my_variable: [ "http://172.18.0.3:80", "http://172.18.0.2:80", "http://172.18.0.1:80" ]
     permissions: 
       issues: write
     
@@ -40,7 +43,7 @@ jobs:
       run: docker pull owasp/zap2docker-stable
       
     - name: Run Scan against URLs
-      run: docker run --net test -t owasp/zap2docker-stable zap-baseline.py -I -d -t http://${{ steps.fetchip.outputs.ip }}:80
+      run: docker run --net test -t owasp/zap2docker-stable zap-baseline.py -I -d -t $my_variable
       
     - name: Stop containers
       if: always()
