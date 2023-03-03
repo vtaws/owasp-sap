@@ -43,7 +43,7 @@ jobs:
       run: docker pull owasp/zap2docker-stable
       
     - name: Run Scan against URLs
-      run: docker run --net test -t owasp/zap2docker-stable zap-baseline.py -I -d -t $my_variable
+      run: docker run --net test -t owasp/zap2docker-stable zap-baseline.py -I -d -t ${{ my_variable }}
       
     - name: Stop containers
       if: always()
