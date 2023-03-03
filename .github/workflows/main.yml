@@ -10,12 +10,10 @@ on:
 jobs:
   build-container:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        my_variable: [ "http://172.18.0.3:80", "http://172.18.0.2:80", "http://172.18.0.1:80" ]
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.ip }}
     permissions: 
-      issues: write
-    
+      issues: write    
     steps:
     
     - name: Checkout
@@ -35,7 +33,13 @@ jobs:
       run: |
         ip=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' owasp-sap_nginx-1_1) 
         echo ::set-output name=ip::$ip
-      
+
+  job2:
+    needs: build-container
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{fromJson(needs.build-container.outputs.ip)}}
+    steps:
     - name: Health check nginx-1
       run: curl http://${{ steps.fetchip.outputs.ip }}:80
     
@@ -43,7 +47,7 @@ jobs:
       run: docker pull owasp/zap2docker-stable
       
     - name: Run Scan against URLs
-      run: docker run --net test -t owasp/zap2docker-stable zap-baseline.py -I -d -t ${{ matrix.my_variable }}
+      run: docker run --net test -t owasp/zap2docker-stable zap-baseline.py -I -d -t ${{ matrix.ip }}
       
     - name: Stop containers
       if: always()
