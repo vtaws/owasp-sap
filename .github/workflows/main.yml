@@ -19,7 +19,7 @@ jobs:
       
     - name: Retrieve version
       run: |
-        echo "ip=$(cat url) >> $GITHUB_OUTPUT
+        echo "ip=$(cat url)" >> $GITHUB_OUTPUT
       
     - name: Creating Docker Network
       run: docker network create --subnet=172.20.0.0/16 test
