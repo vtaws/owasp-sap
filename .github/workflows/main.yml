@@ -10,12 +10,13 @@ on:
 jobs:
   build-container:
     runs-on: ubuntu-latest
-    outputs:
-      ip: ${{ steps.fetchip.outputs.ip }}
+    strategy:
+      matrix:
+        ip: [172.20.0.10, 172.20.0.11]
     permissions: 
       issues: write    
-    steps:
-    
+      
+    steps:  
     - name: Checkout
       uses: actions/checkout@v3
       
@@ -27,28 +28,15 @@ jobs:
       
     - name: Check the image are running
       run: docker ps
-            
-    - name: IP address
-      id: fetchip
-      run: |
-        ip=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' owasp-sap_nginx-1_1) 
-        echo ::set-output name=ip::$ip
-        echo "ip=$ip" >> $GITHUB_OUTPUT
 
-  job2:
-    needs: build-container
-    runs-on: ubuntu-latest
-    strategy:
-      matrix: ${{fromJson(needs.build-container.outputs.ip)}}
-    steps:
-    - name: Health check nginx-1
-      run: curl http://${{ steps.fetchip.outputs.ip }}:80
+    - name: Container Health check - Manual
+      run: curl http://${{ matrix.ip }}:80
     
     - name: OWASP ZAP Docker pull
       run: docker pull owasp/zap2docker-stable
       
     - name: Run Scan against URLs
-      run: docker run --net test -t owasp/zap2docker-stable zap-baseline.py -I -d -t http://${{ matrix.ip }}
+      run: docker run --net test -t owasp/zap2docker-stable zap-baseline.py -I -d -t http://${{ matrix.ip }}:80
       
     - name: Stop containers
       if: always()
