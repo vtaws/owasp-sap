@@ -17,7 +17,8 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
       
-    - name: Retrieve version
+    - name: Read File
+      id: file
       run: |
         echo "ip=$(cat url)" >> $GITHUB_OUTPUT
       
@@ -31,13 +32,13 @@ jobs:
       run: docker ps
 
     - name: Container Health check - Manual
-      run: curl http://${{ GITHUB_OUTPUT.ip }}:80
+      run: curl http://${{steps.file.outputs.ip}}:80
     
     - name: OWASP ZAP Docker pull
       run: docker pull owasp/zap2docker-stable
       
     - name: Run Scan against URLs
-      run: docker run --net test -t owasp/zap2docker-stable zap-baseline.py -I -d -t http://${{ GITHUB_OUTPUT.ip }}:80
+      run: docker run --net test -t owasp/zap2docker-stable zap-baseline.py -I -d -t http://${{steps.file.outputs.ip}}:80
       
     - name: Stop containers
       if: always()
