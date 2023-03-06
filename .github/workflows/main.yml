@@ -31,7 +31,7 @@ jobs:
       run: docker ps
 
     - name: Container Health check - Manual
-      run: curl http://${{ matrix.ip }}:80
+      run: curl http://$GITHUB_OUTPUT:80
     
     - name: OWASP ZAP Docker pull
       run: docker pull owasp/zap2docker-stable
