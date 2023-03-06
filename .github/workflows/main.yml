@@ -10,15 +10,16 @@ on:
 jobs:
   build-container:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        ip: [172.20.0.10, 172.20.0.11]
     permissions: 
       issues: write    
       
     steps:  
     - name: Checkout
       uses: actions/checkout@v3
+      
+    - name: Retrieve version
+      run: |
+        echo ::set-env name=TAG_NAME::$(cat url)
       
     - name: Creating Docker Network
       run: docker network create --subnet=172.20.0.0/16 test
