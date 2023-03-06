@@ -4,7 +4,8 @@ services:
   nginx-1:
     image: nginx
     networks:
-      - test
+      test:
+        ipv4_address: 172.20.0.11
     ports:
       - 8000:80
     volumes:
@@ -12,7 +13,10 @@ services:
   nginx-2:
     image: nginx
     networks:
-      - test
+      test:
+        ipv4_address: 172.20.0.10
+        
+        
     ports:
       - 8001:80
     volumes:
