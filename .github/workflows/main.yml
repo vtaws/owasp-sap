@@ -19,7 +19,7 @@ jobs:
       
     - name: Retrieve version
       run: |
-        echo ::set-env name=TAG_NAME::$(cat url)
+        echo "ip=$(cat rrl) >> $GITHUB_OUTPUT
       
     - name: Creating Docker Network
       run: docker network create --subnet=172.20.0.0/16 test
@@ -37,7 +37,7 @@ jobs:
       run: docker pull owasp/zap2docker-stable
       
     - name: Run Scan against URLs
-      run: docker run --net test -t owasp/zap2docker-stable zap-baseline.py -I -d -t http://${{ matrix.ip }}:80
+      run: docker run --net test -t owasp/zap2docker-stable zap-baseline.py -I -d -t http://$GITHUB_OUTPUT:80
       
     - name: Stop containers
       if: always()
