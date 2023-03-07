@@ -26,12 +26,14 @@ jobs:
     - name: Check the image are running
       run: docker ps
 
-    - name: Container Health check - Manual
+    - name: Fetch IP
+      id: fetchip
       run: |
         for ip in 172.20.0.10 172.20.0.11; do
-          curl http://${ip}:80
+          return ip
         done
-    
+    - name: url check
+      run: curl http://$|{{ step.fetchip.ip}}:80
     - name: OWASP ZAP Docker pull
       run: docker pull owasp/zap2docker-stable
       
