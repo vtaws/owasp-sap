@@ -37,7 +37,7 @@ jobs:
       run: docker pull owasp/zap2docker-stable
       
     - name: Check write
-      run: pwd;ls;cd -h
+      run: pwd;touch hai.txt;ls
       
     - name: Run Scan against URLs
       run: |
