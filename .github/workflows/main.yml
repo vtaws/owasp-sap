@@ -40,7 +40,7 @@ jobs:
       run: |
         run: |
         for ip in `cat url`; do
-          docker run --net test -t owasp/zap2docker-stable zap-baseline.py -J report.json -I -d -t http://${ip}:80
+          docker run --net test -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py -J report.json -I -d -t http://${ip}:80
           echo "***********************************************************************************************************************************************"
           echo "***********************************************************************************************************************************************"
         done
