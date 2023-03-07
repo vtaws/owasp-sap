@@ -29,7 +29,7 @@ jobs:
     - name: Fetch IP
       id: fetchip
       run: |
-        for ip in $(cat url); do
+        for ip in `cat url`; do
           curl http://${ip}:80
         done
         
