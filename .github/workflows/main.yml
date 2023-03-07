@@ -33,7 +33,7 @@ jobs:
           echo "${ip}"
         done
     - name: url check
-      run: curl http://$|{{ steps.fetchip.ip}}:80
+      run: curl http://${{ steps.fetchip.ip }}:80
     - name: OWASP ZAP Docker pull
       run: docker pull owasp/zap2docker-stable
       
