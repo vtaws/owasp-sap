@@ -29,11 +29,10 @@ jobs:
     - name: Fetch IP
       id: fetchip
       run: |
-        for ip in 172.20.0.10 172.20.0.11; do
-          echo "${ip}"
+        for ip in (cat url); do
+          curl http://${ip}:80
         done
-    - name: url check
-      run: curl http://${{ steps.fetchip.ip }}:80
+        
     - name: OWASP ZAP Docker pull
       run: docker pull owasp/zap2docker-stable
       
