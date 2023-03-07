@@ -37,7 +37,7 @@ jobs:
       run: docker pull owasp/zap2docker-stable
       
     - name: Check write
-      run: echo $(pwd);docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable sudo touch /zap/wrk/test.txt
+      run: chmod 777 /home/runner/work/owasp-sap/owasp-sap;docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable touch /zap/wrk/test.txt
       
     - name: Run Scan against URLs
       run: |
