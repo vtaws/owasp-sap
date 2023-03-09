@@ -35,7 +35,7 @@ jobs:
 
     - name: Create temp directory
       run: 
-        mkdir -p zap/wrk
+        mkdir -p zap/wrk && chown -R 1000:1000 zap
 
     - name: Validate access to vol
       run:
