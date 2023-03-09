@@ -1,0 +1,12 @@
+jobs:
+  - type: URL tests
+    tests:
+      - name: 'URL one'                       # Name of the test, optional
+        type: url                             # Specifies that the test is of type 'url'
+        url: http://10.20.0.10:80             # String: The URL to be tested.
+        onFail: 'info'                        # String: One of 'warn', 'error', 'info', mandatory
+      - name: 'URL two'
+        type: url
+        url: http://10.20.0.11:80
+        onFail: ínfo'
+        
