@@ -36,9 +36,6 @@ jobs:
     - name: OWASP ZAP Docker pull
       run: docker pull owasp/zap2docker-stable
       
-    - name: Check write
-      run: docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable
-      
     - name: Run Scan against URLs
       run: |
         for ip in `cat url`; do
