@@ -32,19 +32,19 @@ jobs:
         for ip in `cat url`; do
           curl http://${ip}:80
         done
-        
-    - name: OWASP ZAP Docker Build
-      run: |
-        docker build -t owasp/gds2docker-stable .
+
+    - name: Create temp directory
+      run: 
+        mkdir -p zap/wrk
 
     - name: Validate access to vol
       run:
-        docker run --net test --user root -v ${{ github.workspace }}:/zap/wrk/:rw -t owasp/gds2docker-stable ls -ltra /zap/wrk
+        docker run --net test --user zap -v ${{ github.workspace }}/zap:/zap/wrk/:rw -t owasp/zap2docker-stable echo whoami
       
     - name: Run Scan against URLs
       run: |
         for ip in `cat url`; do
-          docker run --net test --user root -v ${{ github.workspace }}:/zap/wrk/:rw -t owasp/gds2docker-stable zap-baseline.py -J report.json -I -d -t http://${ip}:80
+          docker run --net test --user zap -v ${{ github.workspace }}/zap:/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py -J report.json -I -d -t http://${ip}:80
           echo "***********************************************************************************************************************************************"
           echo "***********************************************************************************************************************************************"
         done
