@@ -36,6 +36,10 @@ jobs:
     - name: OWASP ZAP Docker Build
       run: |
         docker build -t owasp/gds2docker-stable .
+
+    - name: Validate access to vol
+      run:
+        docker run --net test --user zap -v ${{ github.workspace }}:/zap/wrk/:rw -t owasp/gds2docker-stable touch /zap/wrk/test.txt
       
     - name: Run Scan against URLs
       run: |
