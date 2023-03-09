@@ -37,13 +37,12 @@ jobs:
       run: docker pull owasp/zap2docker-stable
       
     - name: Check write
-      run: docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable touch test.txt
+      run: docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable
       
     - name: Run Scan against URLs
       run: |
-        run: |
         for ip in `cat url`; do
-          docker run --net test -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py -J report.json -I -d -t http://${ip}:80
+          docker run --net test -v ${{ github.workspace }}:/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py -J /zap/wrk/report.json -I -d -t http://${ip}:80
           echo "***********************************************************************************************************************************************"
           echo "***********************************************************************************************************************************************"
         done
