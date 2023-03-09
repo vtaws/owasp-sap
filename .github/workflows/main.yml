@@ -39,7 +39,7 @@ jobs:
 
     - name: Validate access to vol
       run:
-        docker run --net test --user zap -v ${{ github.workspace }}/zap:/zap/wrk/:rw -t owasp/zap2docker-stable echo whoami
+        docker run --net test --user zap -v ${{ github.workspace }}/zap:/zap/wrk/:rw -t owasp/zap2docker-stable id && id -u && $UID
       
     - name: Run Scan against URLs
       run: |
