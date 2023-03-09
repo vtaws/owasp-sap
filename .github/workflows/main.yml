@@ -33,16 +33,14 @@ jobs:
           curl http://${ip}:80
         done
         
-    - name: OWASP ZAP Docker pull
-      run: docker pull owasp/zap2docker-stable
-      
-    - name: Check write
-      run: docker run -t owasp/zap2docker-stable echo $USER
+    - name: OWASP ZAP Docker Build
+      run: |
+        docker build -t owasp/gds2docker-stable .
       
     - name: Run Scan against URLs
       run: |
         for ip in `cat url`; do
-          docker run --net test --user zap -v ${{ github.workspace }}:/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py -J /zap/wrk/report.json -I -d -t http://${ip}:80
+          docker run --net test --user zap -v ${{ github.workspace }}:/zap/wrk/:rw -t owasp/gds2docker-stable zap-baseline.py -J /zap/wrk/report.json -I -d -t http://${ip}:80
           echo "***********************************************************************************************************************************************"
           echo "***********************************************************************************************************************************************"
         done
