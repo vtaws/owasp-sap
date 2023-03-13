@@ -30,6 +30,9 @@ jobs:
       run: 
         sudo chown -R 1000:1000 zap-config && sudo chmod +x zap-config/zap.yaml
         
+    - name: curl 
+      run: curl http://10.70.0.12:80
+        
     - name: Validate access to vol
       run:
         docker run --net test --user zap -v ${{ github.workspace }}/zap-config:/zap/wrk/:rw -t owasp/zap2docker-stable ls -ld /zap/wrk/zap.yaml
