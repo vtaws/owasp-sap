@@ -33,7 +33,7 @@ jobs:
 
     - name: Validate access to vol
       run:
-        docker run --net test --user zap -v /home/runner/work/owasp-sap/owasp-sap/zap:/zap/wrk/:rw -t owasp/zap2docker-stable ls -ltra /zap
+        docker run --net test --user zap -v /home/runner/work/owasp-sap/owasp-sap/zap:/zap/wrk/:rw -t owasp/zap2docker-stable ls -ltra /zap/wrk
       
     - name: Run Scan against URLs
       run: |
