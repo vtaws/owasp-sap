@@ -29,9 +29,11 @@ jobs:
     - name: Create temp directory
       run: 
         sudo chown -R 1000:1000 zap-config && sudo chmod +x zap-config/zap.yaml
+    - name: juice_shop
+      run: docker run --net test --ip=172.20.0.12 --rm -p 3000:3000 bkimminich/juice-shop
         
     - name: curl 
-      run: curl http://172.20.0.10:80 && curl http://172.20.0.12
+      run: curl http://172.20.0.10:80 && curl http://172.20.0.12:3000
     - name: Validate access to vol
       run:
         docker run --net test --user zap -v ${{ github.workspace }}/zap-config:/zap/wrk/:rw -t owasp/zap2docker-stable ls -ld /zap/wrk/zap.yaml
