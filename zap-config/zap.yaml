@@ -2,5 +2,5 @@ env:                                      # The environment, mandatory
   contexts:                               # List of 1 or more contexts, mandatory
     - name: context 1                     # Name to be used to refer to this context in other jobs, mandatory
       urls:
-      - http://172.20.0.10       # The top level url, mandatory, everything under this will be included
-      - http://172.20.0.11
+        - http://172.20.0.10       # The top level url, mandatory, everything under this will be included
+        - http://172.20.0.11
