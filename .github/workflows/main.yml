@@ -27,13 +27,13 @@ jobs:
       run: 
         sudo chown -R 1000:1000 zap-config && sudo chmod +x zap-config/zap.yaml
     - name: juice_shop
-      run: docker run --net test --ip=172.20.0.12 -d -p 3000:3000 bkimminich/juice-shop
+      run: docker run --net test --ip=172.20.0.12 -d -p 8080:8080 psiinon/bodgeit
     - name: Check the image are running
       run: docker ps
     - name: curl 
       run: |
         sleep 10
-        curl http://172.20.0.10:80 && curl http://172.20.0.12:3000
+        curl http://172.20.0.10:80 && curl http://172.20.0.12:8080/bodgeit
     - name: Validate access to vol
       run:
         docker run --net test --user zap -v ${{ github.workspace }}/zap-config:/zap/wrk/:rw -t owasp/zap2docker-stable ls -ld /zap/wrk/zap.yaml
