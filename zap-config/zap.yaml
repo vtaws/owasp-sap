@@ -41,7 +41,7 @@ jobs:
       
   - type: outputSummary                # Print summary to stdout, primarily to mimic the behaviour of the packaged scans
     parameters:
-      format: None                     # String: The format of the output, one of None, Short, Long, default: None
+      format: Long                    # String: The format of the output, one of None, Short, Long, default: None
       summaryFile: /zap/wrk/report.json                     # String: The full path of a file into which will be written a JSON summary of the scan, default empty
   
   - type: report                       # Report generation
@@ -51,7 +51,7 @@ jobs:
       reportFile:                      # String: The report file name pattern, default: {yyyy-MM-dd}-ZAP-Report-[[site]]
       reportTitle:                     # String: The report title
       reportDescription:               # String: The report description
-      displayReport:                   # Boolean: Display the report when generated, default: false
+      displayReport: true              # Boolean: Display the report when generated, default: false
     risks:                             # List: The risks to include in this report, default all
       - high
       - medium
