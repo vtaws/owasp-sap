@@ -1,0 +1,5 @@
+jobs:
+  - type: import                       # Import a file of requests
+    parameters:
+      type: url
+      fileName: /zap-config/url
