@@ -21,7 +21,3 @@ env:
     failOnWarning: false
     progressToStdout: true
   vars: {}
-jobs:
-- parameters: {}
-  name: "script"
-  type: "script"
