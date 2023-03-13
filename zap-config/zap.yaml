@@ -51,7 +51,7 @@ jobs:
       reportFile:                      # String: The report file name pattern, default: {yyyy-MM-dd}-ZAP-Report-[[site]]
       reportTitle:                     # String: The report title
       reportDescription:               # String: The report description
-      displayReport: true              # Boolean: Display the report when generated, default: false
+      displayReport:               # Boolean: Display the report when generated, default: false
     risks:                             # List: The risks to include in this report, default all
       - high
       - medium
