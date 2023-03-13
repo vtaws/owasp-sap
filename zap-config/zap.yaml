@@ -21,3 +21,9 @@ env:
     failOnWarning: false
     progressToStdout: true
   vars: {}
+  
+jobs:
+  - type: import                     
+    parameters:
+      type: 'url'                    
+      fileName: '/zap/wrk/url'     
