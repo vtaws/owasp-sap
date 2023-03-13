@@ -37,7 +37,7 @@ jobs:
       
     - name: Run Scan against URLs
       run: |
-        docker run --net test --user zap -v ${{ github.workspace }}/zap:/zap/wrk/:rw -v ${{ github.workspace }}/zap-config:/zap-config/:rw -t owasp/zap2docker-stable  zap.sh -cmd -autorun zap.yaml
+        docker run --net test --user zap -v ${{ github.workspace }}/zap:/zap/wrk/:rw -v ${{ github.workspace }}/zap-config:/zap-config/:rw -t owasp/zap2docker-stable  zap.sh -cmd -autorun /zap/wrk/zap.yaml
     
     - name: Archive DAST Scan results
       uses: actions/upload-artifact@v3
