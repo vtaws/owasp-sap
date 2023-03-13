@@ -1,6 +1,14 @@
 ---
 version: "3"
 services:
+  juiceshop:
+    image: bkimminich/juice-shop
+    networks:
+      test:
+        ipv4_address: 172.20.0.12
+    ports:
+      3000:80
+    
   nginx-1:
     image: nginx
     networks:
