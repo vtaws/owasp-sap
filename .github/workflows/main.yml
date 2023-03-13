@@ -31,7 +31,9 @@ jobs:
     - name: Check the image are running
       run: docker ps
     - name: curl 
-      run: curl http://172.20.0.10:80 && curl http://172.20.0.12:3000
+      run: |
+        sleep 10 \
+        curl http://172.20.0.10:80 && curl http://172.20.0.12:3000
     - name: Validate access to vol
       run:
         docker run --net test --user zap -v ${{ github.workspace }}/zap-config:/zap/wrk/:rw -t owasp/zap2docker-stable ls -ld /zap/wrk/zap.yaml
