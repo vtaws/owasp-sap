@@ -1,6 +1,27 @@
-env:                                      # The environment, mandatory
-  contexts:                               # List of 1 or more contexts, mandatory
-    - name: context 1                     # Name to be used to refer to this context in other jobs, mandatory
-      urls:
-        - http://172.20.0.10       # The top level url, mandatory, everything under this will be included
-        - http://172.20.0.11
+---
+env:
+  contexts:
+  - name: "Default Context"
+    urls:
+    - "https://httpbin.org"
+    - "https://google.com"
+    includePaths: []
+    excludePaths: []
+    authentication:
+      parameters: {}
+      verification:
+        method: "response"
+        pollFrequency: 60
+        pollUnits: "requests"
+    sessionManagement:
+      method: "cookie"
+      parameters: {}
+  parameters:
+    failOnError: true
+    failOnWarning: false
+    progressToStdout: true
+  vars: {}
+jobs:
+- parameters: {}
+  name: "script"
+  type: "script"
