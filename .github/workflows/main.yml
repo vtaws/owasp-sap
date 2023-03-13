@@ -31,7 +31,7 @@ jobs:
         sudo chown -R 1000:1000 zap-config && sudo chmod +x zap-config/zap.yaml
         
     - name: curl 
-      run: curl http://172.20.0.10:80
+      run: curl http://172.20.0.12:80
         
     - name: Validate access to vol
       run:
