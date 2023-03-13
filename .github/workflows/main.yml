@@ -26,16 +26,10 @@ jobs:
     - name: Check the image are running
       run: docker ps
 
-    - name: Fetch IP
-      id: fetchip
-      run: |
-        for ip in `cat url`; do
-          curl http://${ip}:80
-        done
-
     - name: Create temp directory
       run: 
-        mkdir -p zap/wrk && sudo chown -R 1000:1000 zap
+        mkdir -p zap/wrk && sudo chown -R 1000:1000 zap && sudo chown -R 1000:1000 zap-config
+        
 
     - name: Validate access to vol
       run:
@@ -43,12 +37,18 @@ jobs:
       
     - name: Run Scan against URLs
       run: |
+<<<<<<< HEAD
         ls -l; cp -p zap.yaml /zap/wrk/;docker run --net test --user zap -v ${{ github.workspace }}/zap:/zap/wrk/:rw -t owasp/zap2docker-stable zap.sh -cmd -autorun zap.yaml
     - name: Archive DAST Scan results
       uses: actions/upload-artifact@v3
       with:
         name: DAST-scan-report
         path: /home/runner/work/owasp-sap/owasp-sap/zap/report-*.json
+=======
+        docker run --net test --user zap -v ${{ github.workspace }}/zap:/zap/wrk/:rw -v ${{ github.workspace }}/zap-config:/zap-config/  -t owasp/zap2docker-stable zap-baseline.py -J report.json -I -d -cmd -autorun /zap-config/zap.yaml
+        echo "***********************************************************************************************************************************************"
+        echo "***********************************************************************************************************************************************"
+>>>>>>> bb3ce5c (adding automation framework)
           
     - name: Stop containers
       if: always()
