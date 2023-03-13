@@ -32,7 +32,7 @@ jobs:
       run: docker ps
     - name: curl 
       run: |
-        sleep 10 \
+        sleep 10
         curl http://172.20.0.10:80 && curl http://172.20.0.12:3000
     - name: Validate access to vol
       run:
