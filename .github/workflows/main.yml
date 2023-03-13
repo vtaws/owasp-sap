@@ -38,6 +38,9 @@ jobs:
       run: |
         docker run --net test --user zap -v ${{ github.workspace }}/zap-config:/zap/wrk:rw -t owasp/zap2docker-stable  zap.sh -cmd -autorun /zap/wrk/zap.yaml
     
+    - name: Check Dir
+      run: ls -l /zap-config/*
+    
     - name: Archive DAST Scan results
       uses: actions/upload-artifact@v3
       with:
