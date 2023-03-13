@@ -37,18 +37,12 @@ jobs:
       
     - name: Run Scan against URLs
       run: |
-<<<<<<< HEAD
-        ls -l; cp -p zap.yaml /zap/wrk/;docker run --net test --user zap -v ${{ github.workspace }}/zap:/zap/wrk/:rw -t owasp/zap2docker-stable zap.sh -cmd -autorun zap.yaml
+        docker run --net test --user zap -v ${{ github.workspace }}/zap:/zap/wrk/:rw -v ${{ github.workspace }}/zap-config:/zap-config/:rw -t owasp/zap2docker-stable zap.sh -cmd -autorun /zap-config/zap.yaml
     - name: Archive DAST Scan results
       uses: actions/upload-artifact@v3
       with:
         name: DAST-scan-report
         path: /home/runner/work/owasp-sap/owasp-sap/zap/report-*.json
-=======
-        docker run --net test --user zap -v ${{ github.workspace }}/zap:/zap/wrk/:rw -v ${{ github.workspace }}/zap-config:/zap-config/  -t owasp/zap2docker-stable zap-baseline.py -J report.json -I -d -cmd -autorun /zap-config/zap.yaml
-        echo "***********************************************************************************************************************************************"
-        echo "***********************************************************************************************************************************************"
->>>>>>> bb3ce5c (adding automation framework)
           
     - name: Stop containers
       if: always()
