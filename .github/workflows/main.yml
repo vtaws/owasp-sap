@@ -30,7 +30,7 @@ jobs:
       run: 
         sudo chown -R 1000:1000 zap-config && sudo chmod +x zap-config/zap.yaml
     - name: juice_shop
-      run: docker run --net test --ip=172.20.0.12 --rm -p 3000:3000 bkimminich/juice-shop
+      run: docker run --net test --ip=172.20.0.12 -d -p 3000:3000 bkimminich/juice-shop
         
     - name: curl 
       run: curl http://172.20.0.10:80 && curl http://172.20.0.12:3000
