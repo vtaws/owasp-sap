@@ -3,7 +3,11 @@ env:
   contexts:
   - name: "Default Context"
     urls:
-    - "http://172.20.0.10:80"
+    - "http://172.20.0.10"
+    - "http://172.20.0.11"
+    - "http://172.20.0.12:8080/bodgeit"
+    - "http://demo.owasp-juice.shop"
+
     includePaths: []
     excludePaths: []
     authentication:
@@ -22,10 +26,10 @@ env:
   vars: {}
   
 jobs:
-  - type: import                     
-    parameters:
-      type: 'url'                    
-      fileName: '/zap/wrk/url'
+  # - type: import                     
+  #   parameters:
+  #     type: 'url'                    
+  #     fileName: '/zap/wrk/url'
       
   - type: passiveScan-config           # Passive scan configuration
     parameters:
