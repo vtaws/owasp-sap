@@ -2,9 +2,6 @@
 env:
   contexts:
   - name: "Default Context"
-    urls:
-    - "https://httpbin.org"
-    - "https://google.com"
     includePaths: []
     excludePaths: []
     authentication:
