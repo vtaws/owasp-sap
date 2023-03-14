@@ -26,10 +26,10 @@ env:
   vars: {}
   
 jobs:
-  # - type: import                     
-  #   parameters:
-  #     type: 'url'                    
-  #     fileName: '/zap/wrk/url'
+  - type: import                     
+    parameters:
+      type: 'url'                    
+      fileName: '/zap/wrk/url'
       
   - type: passiveScan-config           # Passive scan configuration
     parameters:
