@@ -3,7 +3,7 @@ env:
   contexts:
   - name: "Default Context"
     urls:
-    - http://172.20.0.10:80
+    - "http://172.20.0.10:80
     includePaths: []
     excludePaths: []
     authentication:
