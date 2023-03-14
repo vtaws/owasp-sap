@@ -3,7 +3,7 @@ env:
   contexts:
   - name: "Default Context"
     urls:
-    - "http://172.20.0.10:80
+    - "http://google.com"
     includePaths: []
     excludePaths: []
     authentication:
@@ -61,4 +61,4 @@ jobs:
       - medium
       - low
       - falsepositive
-    sections:      
+    sections:
