@@ -49,7 +49,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: DAST-scan-report
-        path: /home/runner/work/owasp-sap/owasp-sap/zap-config/*-ZAP-Report-httpbin.org.json
+        path: /home/runner/work/owasp-sap/owasp-sap/zap-config/*-ZAP-Report-httpbin.org-*.json
           
     - name: Stop containers
       if: always()
