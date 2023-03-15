@@ -36,7 +36,7 @@ jobs:
         curl http://172.20.0.10:80 && curl http://172.20.0.12:8080/bodgeit
     - name: Validate access to vol
       run:
-        docker run --net test --user zap -v ${{ github.workspace }}/zap-config:/zap/wrk/:rw -t owasp/zap2docker-stable openssl version
+        docker run --net test --user zap -v ${{ github.workspace }}/zap-config:/zap/wrk/:rw -t owasp/zap2docker-stable sudo apt -y install libssl-dev
         
  
 
