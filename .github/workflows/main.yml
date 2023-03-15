@@ -49,7 +49,7 @@ jobs:
       run: |
         docker run --net test \
           --user zap -v ${{ github.workspace }}/zap-config:/zap/wrk:rw \
-          owasp/zap2docker-stable -t https://expired.badssl.com/
+          owasp/zap2docker-stable -t "https://expired.badssl.com/"
           
     
     - name: Check Dir
