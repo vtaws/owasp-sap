@@ -15,15 +15,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "branchname is ${{ github.ref_name }}"
           prs=$(gh pr list \
-              --repo "$GITHUB_REPOSITORY" \
-              --json baseRefName,headRefName \
-              --jq 'map(select(.baseRefName == "main" and .headRefName == "${{ github.ref_name }}" | length' )) \
-              )
-          if ((prs > 0)); then
-              echo "skip=true" >> "$GITHUB_OUTPUT"
-          fi
+                --repo ${{ github.repository }} \
+                --json baseRefName,headRefName \
+                --jq '
+                    map(select(.baseRefName == "main" and .headRefName == ${{ github.ref_name }} ))
+                    | length
+                ')
+            if ((prs > 0)); then
+                echo "skip=true" >> "$GITHUB_OUTPUT"
+            fi
       - name: Create pull request
         if: '!steps.check.outputs.skip'
         run: echo "no pr open for this branch"
