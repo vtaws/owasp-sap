@@ -27,8 +27,8 @@ jobs:
             fi
       - name: Create pull request
         if: '!steps.check.outputs.skip'
-        run: echo "no pr open for this branch ok"
+        run: echo "no pr open for this branch"
       - name: Dont create pull request
         if: 'steps.check.outputs.skip'
-        run: echo "pr open for this branch ok"
+        run: echo "pr open for this branch"
 
