@@ -1,0 +1,37 @@
+name: owasp-zap
+
+on:
+  push:
+    branches:
+    - main
+    
+  workflow_dispatch:
+  
+jobs:
+  build-container:
+    runs-on: ubuntu-latest
+    permissions: 
+      issues: write
+    steps:
+      - name: Check if PR exists
+        id: pr_check
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "branchname is $GITHUB_REF_NAME"
+          prs=$(gh pr list \
+              --repo "$GITHUB_REPOSITORY" \
+              --json baseRefName,headRefName \
+              --jq '
+                  map(select(.baseRefName == "main" and .headRefName == $GITHUB_REF_NAME))
+                  | length
+              ')
+          if ((prs > 0)); then
+              echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Create pull request
+        if: '!steps.check.outputs.skip'
+        run: echo "no pr open for this branch"
+      - name: Dont create pull request
+        if: 'steps.check.outputs.skip'
+        run: echo "pr open for this branch"
