@@ -19,10 +19,10 @@ jobs:
                 --repo ${{ github.repository }} \
                 --json baseRefName,headRefName \
                 --jq '
-                    map(select(.baseRefName == "main" and .headRefName == ${{ github.ref_name }} ))
+                    map(select(.baseRefName == "main" and .headRefName == "${{ github.ref_name }}"" ))
                     | length
                 ')
-            if ((prs > 0)); then
+            if [ ${prs} > 0 ]; then
                 echo "skip=true" >> "$GITHUB_OUTPUT"
             fi
       - name: Create pull request
