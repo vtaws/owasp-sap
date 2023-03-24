@@ -34,10 +34,15 @@ jobs:
       - name: Dont create pull request
         if: 'steps.pr_check.outputs.skip'
         run: echo "pr open for this branch"
+      - name: Issue Number
+        id: get_issue_number
+        run: |
+          PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
+          echo "pr_number=true" >> "$GITHUB_OUTPUT"
       - name: DAST PR Commenter
         uses: actions/github-script@v6
         env:
-          issue_number: ${{ github.event.issue.number }}
+          issue_number: ${{ steps.get_issue_number.outputs.pr_number }}
         if: ${{ steps.pr_check.outputs.skip == 'true' }}
         with:
           github-token: ${{ github.token }}
