@@ -38,7 +38,7 @@ jobs:
         id: get_issue_number
         run: |
           PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
-          echo "pr_number=true" >> "$GITHUB_OUTPUT"
+          echo "pr_number=${PR_NUMBER}" >> "$GITHUB_OUTPUT"
       - name: DAST PR Commenter
         uses: actions/github-script@v6
         env:
