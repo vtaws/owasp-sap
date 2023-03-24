@@ -37,7 +37,7 @@ jobs:
       - name: DAST PR Commenter
         uses: actions/github-script@v6
         env:
-          issue_number: ${{ github.event.issue.number }}
+          issue_number: github.event.issue.number
         if: ${{ steps.pr_check.outputs.skip == 'true' }}
         with:
           github-token: ${{ github.token }}
