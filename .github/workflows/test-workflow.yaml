@@ -41,7 +41,7 @@ jobs:
           github-token: ${{ github.token }}
           script: |
             const fs = require("fs");
-            const issue_number = ${{ github.event.issue.number }}
+            const issue_number = ${{ github.event.issue.number }};
             const scan_out = fs.readFileSync("${{ github.workspace }}/dastscan.log", "utf8");
             const output = `#### DAST Scan ⚙️\`${{ steps.zap_dast_scan.outcome }}\`
             <details><summary>OWASP ZAP DAST Scan results</summary>
