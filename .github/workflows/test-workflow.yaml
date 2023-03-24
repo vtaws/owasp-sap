@@ -3,7 +3,8 @@ name: pr_checker
 on:
   push:
   workflow_dispatch:
-
+  pull_request:
+    types: [opened,synchronize]
   
 jobs:
   build-container:
@@ -37,7 +38,7 @@ jobs:
         run: echo "pr open for this branch"
       - name: DAST PR Commenter
         uses: actions/github-script@v6
-        if: ${{ steps.pr_check.outputs.skip == 'true' }} 
+        if: github.event_name == 'pull_request'
         with:
           github-token: ${{ github.token }}
           script: |
