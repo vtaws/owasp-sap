@@ -3,6 +3,9 @@ name: pr_checker
 on:
   push:
   workflow_dispatch:
+  pull_request:
+    - synchronize
+    - opened
   
 jobs:
   build-container:
