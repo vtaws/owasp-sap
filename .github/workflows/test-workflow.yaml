@@ -29,7 +29,7 @@ jobs:
                 echo "skip=true" >> "$GITHUB_OUTPUT"
             fi
       - name: echo_stuff
-        run: echo "cats and dogs and other stuff" > ${{ github.workspace }}/dastscan.log
+        run: echo "cats and dogs" > ${{ github.workspace }}/dastscan.log
       - name: Create pull request
         if: '!steps.pr_check.outputs.skip'
         run: echo "no pr open for this branch"
