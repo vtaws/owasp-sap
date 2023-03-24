@@ -37,7 +37,7 @@ jobs:
       - name: DAST PR Commenter
         uses: actions/github-script@v6
         env:
-          issue_number: github.event.issue.number
+          issue_number: ${{ github.event.issue.number }}
         if: ${{ steps.pr_check.outputs.skip == 'true' }}
         with:
           github-token: ${{ github.token }}
@@ -55,7 +55,7 @@ jobs:
 
             *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
             github.rest.issues.createComment({
-              issue_number: `${issue_number}`,
+              issue_number: `${{env.issue_number}}`,
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: output
