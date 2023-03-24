@@ -25,10 +25,36 @@ jobs:
             if [ ${prs} > 0 ]; then
                 echo "skip=true" >> "$GITHUB_OUTPUT"
             fi
+      - name: echo_stuff
+        run: echo "cats and dogs" > ${{ github.workspace }}/dastscan.log
       - name: Create pull request
         if: '!steps.pr_check.outputs.skip'
         run: echo "no pr open for this branch"
       - name: Dont create pull request
         if: 'steps.pr_check.outputs.skip'
         run: echo "pr open for this branch"
+      - name: DAST PR Commenter
+        uses: actions/github-script@v6
+        if: ${{ steps.pr_check.outputs.skip == "true" }} 
+        with:
+          github-token: ${{ github.token }}
+          script: |
+            const fs = require("fs");
+            const scan_out = fs.readFileSync("${{ github.workspace }}/dastscan.log", "utf8");
+            const output = `#### DAST Scan ⚙️\`${{ steps.zap_dast_scan.outcome }}\`
+            <details><summary>OWASP ZAP DAST Scan results</summary>
+
+            \`\`\`\n
+            ${scan_out}
+            \`\`\`
+
+            </details>
+
+            *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
 
