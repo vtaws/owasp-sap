@@ -36,12 +36,13 @@ jobs:
         run: echo "pr open for this branch"
       - name: DAST PR Commenter
         uses: actions/github-script@v6
+        env:
+          issue_number: ${{ github.event.issue.number }}
         if: ${{ steps.pr_check.outputs.skip == 'true' }}
         with:
           github-token: ${{ github.token }}
           script: |
             const fs = require("fs")
-            const issue_number = `${{ github.event.issue.number }}\`
             const scan_out = fs.readFileSync("${{ github.workspace }}/dastscan.log", "utf8");
             const output = `#### DAST Scan ⚙️\`${{ steps.zap_dast_scan.outcome }}\`
             <details><summary>OWASP ZAP DAST Scan results</summary>
