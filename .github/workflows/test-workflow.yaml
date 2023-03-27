@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions: 
       issues: write
+      pull-requests: write 
     steps:
       - name: Check if PR exists
         id: pr_check
@@ -22,13 +23,57 @@ jobs:
                     map(select(.baseRefName == "main" and .headRefName == "${{ github.ref_name }}" ))
                     | length
                 ')
-            if [ ${prs} > 0 ]; then
-                echo "skip=true" >> "$GITHUB_OUTPUT"
+            if [[ "${prs}" -gt 0 ]]; then
+              echo "skip=true" >> "$GITHUB_OUTPUT"
+            else
+              echo "skip=false" >> "$GITHUB_OUTPUT"
             fi
+      - name: echo_stuff
+        run: echo "cats and dogs" > ${{ github.workspace }}/dastscan.log
       - name: Create pull request
-        if: '!steps.check.outputs.skip'
+        if: '!steps.pr_check.outputs.skip'
         run: echo "no pr open for this branch"
       - name: Dont create pull request
-        if: 'steps.check.outputs.skip'
+        if: 'steps.pr_check.outputs.skip'
         run: echo "pr open for this branch"
+      - name: Issue Number
+        id: get_issue_number
+        run: |
+          PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
+          echo "pr_number=${PR_NUMBER}" >> "$GITHUB_OUTPUT"
+      - name: DAST PR Commenter
+        uses: actions/github-script@v6
+        env:
+          issue_number: ${{ steps.get_issue_number.outputs.pr_number }}
+        if: ${{ steps.pr_check.outputs.skip == 'true' }}
+        with:
+          github-token: ${{ github.token }}
+          script: |
+            const issues = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              head: `${context.repo.owner}:${context.ref.replace('refs/heads/', '')}`
+            })
 
+            const pr = context.issue.number || issues.data[0].number
+            const fs = require("fs")
+            const scan_out = fs.readFileSync("${{ github.workspace }}/dastscan.log", "utf8");
+            const output = `#### DAST Scan ⚙️\`${{ steps.zap_dast_scan.outcome }}\`
+            <details><summary>OWASP ZAP DAST Scan results</summary>
+
+            \`\`\`\n
+            ${scan_out}
+            \`\`\`
+
+            </details>
+
+            *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+            github.rest.issues.createComment({
+              issue_number: `${pr}`,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
+
+ 
