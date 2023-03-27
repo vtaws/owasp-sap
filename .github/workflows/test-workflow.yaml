@@ -23,8 +23,10 @@ jobs:
                     map(select(.baseRefName == "main" and .headRefName == "${{ github.ref_name }}" ))
                     | length
                 ')
-            if [ ${prs} > 0 ]; then
-                echo "skip=true" >> "$GITHUB_OUTPUT"
+            if [[ "${prs}" -gt 0 ]]; then
+              echo "skip=true" >> "$GITHUB_OUTPUT"
+            else
+              echo "skip=false" >> "$GITHUB_OUTPUT"
             fi
       - name: echo_stuff
         run: echo "cats and dogs" > ${{ github.workspace }}/dastscan.log
@@ -74,3 +76,4 @@ jobs:
               body: output
             })
 
+ 
