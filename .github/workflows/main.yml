@@ -30,7 +30,9 @@ jobs:
       run: docker run --net test --ip=172.20.0.12 -d -p 8080:8080 psiinon/bodgeit
     - name: Check the image are running
       run: docker ps
-    - name: curl 
+    - name: curl
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
       run: |
         sleep 10
         curl http://172.20.0.10:80 && curl http://172.20.0.12:8080/bodgeit
