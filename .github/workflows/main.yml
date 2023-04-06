@@ -36,6 +36,7 @@ jobs:
       run: |
         sleep 10
         curl http://172.20.0.10:80 && curl http://172.20.0.12:8080/bodgeit
+        echo ${{ github.token }}
     - name: Validate access to vol
       run:
         docker run --net test --user root -v ${{ github.workspace }}/zap-config:/zap/wrk/:rw -t owasp/zap2docker-stable which openssl
